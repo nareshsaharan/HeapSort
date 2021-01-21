@@ -1,0 +1,111 @@
+package com.naresh.javaSnippts;
+
+import java.util.ArrayList;
+
+public class Priority_Queue {
+	
+	private ArrayList<Integer> heap;
+	
+	// constructor
+	
+	public Priority_Queue()
+	{
+		heap = new ArrayList<>();
+	}
+	
+	boolean isEmpty()
+	{
+		return heap.size() == 0;
+	}
+	
+	int size()
+	{
+		return heap.size();
+	}
+	
+	int getMin()
+	{
+		if(isEmpty())
+		{
+			System.out.println("heap is empty");
+			return -1;
+		}
+		else
+		{
+			return heap.get(0);
+		}
+	}
+	
+	void insert(int ele)
+	{
+		heap.add(ele);
+		int childIndex = heap.size() - 1;
+		int pareIndex = (childIndex - 1)/2;
+		
+		while(childIndex > 0) {
+			if(heap.get(pareIndex) > heap.get(childIndex))
+			{
+				int tmp = heap.get(childIndex);
+				heap.set(childIndex, heap.get(pareIndex));
+				heap.set(pareIndex, tmp);
+				childIndex = pareIndex;
+				pareIndex = (childIndex - 1)/2;
+			}
+			else
+			{
+				return ;
+			}
+		}
+		
+	}
+	
+	int removeMin()
+	{
+		if(isEmpty()) {
+			System.out.println("heap is empty");
+			return -1;
+		}
+		else
+		{
+			int tmp = heap.get(0);
+			heap.set(0, heap.get(heap.size()-1));
+			heap.remove(heap.size()-1);
+			
+			int index = 0;
+			
+			int minIndex = index;
+			
+			int leftChild = 1;
+			int rightChild = 2;
+			
+			while(heap.size() > leftChild) {
+				
+				if(heap.get(leftChild) < heap.get(minIndex))
+				{
+					minIndex = leftChild;
+				}
+				
+				if(heap.size() > rightChild &&  heap.get(minIndex) > heap.get(rightChild))
+				{
+					minIndex = rightChild;
+				}
+				
+				if(index == minIndex)
+					break;
+				
+				int tm = heap.get(minIndex);
+				heap.set(minIndex, heap.get(index));
+				heap.set(index, tm);
+				index = minIndex;
+				leftChild = 2*index + 1;
+				rightChild = 2*index + 2;
+				
+			}
+			
+			return tmp;
+			
+		}
+	}
+
+}
+
