@@ -1,0 +1,94 @@
+package com.naresh.javaSnippts;
+
+
+public class HeapSort {
+	
+	static void insert(int a[],int i)
+	{
+		int childIndex = i;
+		int parIndex = (childIndex - 1)/2;
+		
+		while(childIndex > 0)
+		{
+			if(a[childIndex] > a[parIndex])
+			{
+				int tmp = a[childIndex];
+				a[childIndex] = a[parIndex];
+				a[parIndex] = tmp;
+				childIndex = parIndex;
+				parIndex = (childIndex-1)/2;
+			}
+			else
+			{
+				return ;
+			}
+		}
+	}
+	
+	static int remove(int a[],int heapSize)
+	{
+		int tmp = a[0];
+		a[0] = a[heapSize -1];
+		heapSize--;
+		
+		int index = 0;
+		int left = 2*index + 1;
+		int right = 2*index + 1;
+		
+		
+		while(left < heapSize)
+		{
+			int maxIndex = index;
+			
+			if(a[maxIndex]<a[left])
+			{
+				maxIndex = left;
+			}
+			if(right < heapSize && a[maxIndex] < a[right])
+			{
+				maxIndex = right;
+			}
+			
+			if(index == maxIndex) break;
+			
+			int tmp2 = a[maxIndex];
+			a[maxIndex] = a[index];
+			a[index] = tmp2;
+			index = maxIndex;
+			left = 2*index + 1;
+			right  = 2*index + 1;
+		}
+		
+		return tmp;
+		
+		
+	}
+
+	
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		
+		int a[] = {2 ,3 ,1 ,5 ,10 };
+		int n = a.length;
+		
+		for(int i=0;i<a.length;i++)
+		{
+			insert(a,i);
+		}
+		
+		for(int i=0;i<a.length;i++)
+		{
+			a[n-i-1] = remove(a,n-i);
+		}
+		
+		for(int i=0;i<n;i++)
+		{
+			System.out.print(a[i]+" ");
+		}
+		
+	}
+
+}
+
